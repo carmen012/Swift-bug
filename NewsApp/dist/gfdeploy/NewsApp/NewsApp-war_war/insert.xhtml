@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>E-News</title>
+ <h:outputStylesheet library="css" name="main.css" />
+    </h:head>
+    <h:body>
+        
+         <c:if test="#{!empty test}">
+       
+        <c:if test="${!empty newsDBController.news.id}">
+            <ui:include src="header.xhtml"/>   
+        </c:if>
+        <c:if test="${empty username}">
+            <ui:include src="login.xhtml"/>
+        </c:if>
+        <c:if test="${!empty username}">
+            <c:if test="${empty newsDBController.news.id}">
+                <ui:include src="input.xhtml"/>
+            </c:if> 
+            
+            
+            <c:if test="${!empty newsDBController.news.id}">
+                <f:view>
+                    <h:form>
+
+                        <h1><h:outputText value="Create"/></h1>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Id:" for="id" />
+                            <h:outputText  value="#{newsDBController.news.id}"/>
+                            <h:outputLabel value="Title:" for="title" />
+                            <h:outputText  value="#{newsDBController.news.title}"/>
+
+                            <h:outputLabel value="Content:" for="context" />
+                            <h:outputText  value="#{newsDBController.news.context}"/>
+
+                            <h:outputLabel value="Filename:" for="filename" />
+                            <h:outputText  value="#{newsDBController.news.filename}" />
+                            <h:inputHidden id="title" value="#{newsDBController.news.title}"/> 
+                            <h:inputHidden id="filename" value="#{newsDBController.news.filename}" />
+                            <h:inputHidden id="context" value="#{newsDBController.news.context}"/> 
+                            <h:inputHidden id="id" value="#{newsDBController.news.id}"  required="true"/>
+                            <h:commandButton value="submit" action="#{newsDBController.insert()}"/>
+                            <h:button value="cancel"  outcome="main"/>
+                        </h:panelGrid>
+                    </h:form>
+                </f:view>
+            </c:if>
+        </c:if>
+        </c:if>
+        <c:if test="${empty test}">
+              <ui:include src="input.xhtml"/>
+        </c:if>
+        <ui:include src="footer.xhtml"/>   
+
+    </h:body>
+</html>
+
